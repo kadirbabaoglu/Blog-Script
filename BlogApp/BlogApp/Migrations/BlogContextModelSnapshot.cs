@@ -19,6 +19,23 @@ namespace BlogApp.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("BlogApp.Entities.About", b =>
+                {
+                    b.Property<int>("AboutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("AboutId");
+
+                    b.ToTable("Abouts");
+                });
+
             modelBuilder.Entity("BlogApp.Entities.Comment", b =>
                 {
                     b.Property<int>("CommentId")
@@ -75,6 +92,44 @@ namespace BlogApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("BlogApp.Entities.Setting", b =>
+                {
+                    b.Property<int>("SettingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Copyright")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SiteName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Twitter")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Youtube")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("SettingId");
+
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("BlogApp.Entities.Tag", b =>

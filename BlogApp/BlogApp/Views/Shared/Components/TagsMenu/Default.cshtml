@@ -1,0 +1,10 @@
+﻿@model List<Tag>
+<div class="tags  widget-tags">
+    <h6>Etiketler</h6>
+    <hr>
+    @foreach (var item in Model)
+    {
+        <a href="#" class="tags__link">@item.Title</a>
+
+    }
+</div>

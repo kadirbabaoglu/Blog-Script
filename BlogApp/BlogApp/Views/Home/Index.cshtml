@@ -1,8 +1,132 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomePageViewModel
+@{
+    ViewData["Title"] = "Privacy Policy";
 }
+    <div class="row">
+        <div class="col-xs-12  col-md-8">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        @foreach(var item in Model.Posts)
+        {
+          <div class="boxed  push-down-45">
+
+                <!-- Featured image and meta start -->
+                <div class="meta">
+                    <img class="wp-post-image" src="~/lib/assets/images/dummy-licensed/@item.Image" alt="Blog image" width="748" height="324">
+                    <div class="meta__container">
+                        <div class="row">
+                            <div class="col-xs-12  col-sm-8">
+                                <div class="meta__info">
+                                    <span class="meta__author"><img src="~/lib/assets/images/dummy-licensed/@item.Image" alt="Meta avatar" width="30" height="30"> <a href="#">@item.User</a>  in <a href="#">News</a> </span>
+                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span>  &nbsp; @item.PublishedOn</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12  col-sm-4">
+                                <div class="meta__comments">
+                                    <span class="glyphicon glyphicon-comment"></span>  &nbsp;
+                                    <a href="single-post.html#disqus_thread"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured image and meta end -->
+                <!-- Start of the blogpost -->
+                <div class="row">
+                    <div class="col-xs-10  col-xs-offset-1">
+
+                        <!-- Start of the content -->
+                        <div class="post-content--front-page">
+                            <h2 class="front-page-title">
+                                <a asp-controller="Post" asp-action="Details" asp-route-id="@item.PostId" >@item.Title</a>
+                            </h2>
+
+                            <p>@item.Description</p>
+                        </div>
+
+                        <!-- End of the content -->
+                        <a href="single-post.html">
+                            <div class="read-more">
+                                Devamını Oku
+                                <div class="read-more__arrow">
+                                    <span class="glyphicon  glyphicon-chevron-right"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div> 
+        }
+
+           
+        </div>
+
+        <div class="col-xs-12  col-md-4">
+
+            <!-- Widget author -->
+            <div class="widget-author  boxed  push-down-30">
+                <div class="widget-author__image-container">
+                    <div class="widget-author__avatar--blurred">
+                        <img src="~/lib/assets/images/dummy/about-1.jpg" alt="Avatar image" width="90" height="90">
+                    </div>
+                <img class="widget-author__avatar" src="~/lib/assets/images/dummy/about-1.jpg" alt="Avatar image" width="90" height="90">
+                </div>
+                <div class="row">
+                    <div class="col-xs-10  col-xs-offset-1">
+                        <h4>Timothy Miler</h4>
+                        <p>User Interface Designer, Amateurish Poker Player and Imaginary Breakdancer ...</p>
+                    </div>
+                </div>
+            </div>
+
+        
+            
+            <div class="sidebar  boxed  push-down-30">
+                <div class="row">
+                    <div class="col-xs-10  col-xs-offset-1">
+
+                        <!-- Widget categories -->
+                        <div class="widget-categories  push-down-30">
+                            <h6>Categories</h6>
+                            <ul>
+                                <li>
+                                    <a href="#">Technology &nbsp; <span class="widget-categories__text">(16)</span>  </a>
+                                </li>
+                                <li>
+                                    <a href="#">User Interface design &nbsp; <span class="widget-categories__text">(13)</span>  </a>
+                                </li>
+                                <li>
+                                    <a href="#">User Experience &nbsp; <span class="widget-categories__text">(9)</span>  </a>
+                                </li>
+                                <li>
+                                    <a href="#">Startups &nbsp; <span class="widget-categories__text">(23)</span>  </a>
+                                </li>
+                                <li>
+                                    <a href="#">Reading &amp; Books &nbsp; <span class="widget-categories__text">(3)</span>  </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                   
+                        <vc:tags-menu></vc:tags-menu>
+
+
+                        <div class="social-icons  widget-social-icons  push-down-30">
+                            <h6>Social Icons</h6>
+                            <a href="#" class="social-icons__container"> <span class="zocial-facebook"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-twitter"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-skype"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-youtube"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-reddit"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-wordpress"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-bitbucket"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-github"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-html5"></span>  </a>
+                            <a href="#" class="social-icons__container"> <span class="zocial-meetup"></span>  </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

@@ -1,6 +1,7 @@
 ﻿using BlogApp.Data.Concrete.EfCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp.Controllers
 {
@@ -19,9 +20,10 @@ namespace BlogApp.Controllers
             return View(_context.Posts.ToList());
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int Id)
         {
-            return View();
+           
+            return View(await _context.Posts.FirstOrDefaultAsync(x => x.PostId == Id));
         }
 
         public ActionResult Create()
