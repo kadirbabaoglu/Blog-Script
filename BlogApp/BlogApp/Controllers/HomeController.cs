@@ -1,15 +1,16 @@
 ﻿using BlogApp.Data.Concrete.EfCore;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BlogApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
         private readonly BlogContext _context;
-        public HomeController(ILogger<HomeController> logger, BlogContext context)
+        public HomeController(BlogContext context)
         {
             _context = context;
 
@@ -23,12 +24,26 @@ namespace BlogApp.Controllers
                 new HomePageViewModel
                 {
                     Posts       = _context.Posts.ToList(),
-                    //Tags        = _context.Tags.ToList(),
                     Settings    = _context.Settings.ToList(),
                 }
                );
         }
 
-        
+        public async Task<IActionResult> List(string slug)
+        {
+            var posts = _context.Posts.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(slug))
+            {
+                posts = posts.Where(i => i.Tags.Any(p => p.Url == slug));
+            }
+
+            return View(new HomePageViewModel
+            {
+                Posts = await posts.ToListAsync()
+            });
+        }
+
+
     }
 }

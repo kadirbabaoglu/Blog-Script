@@ -1,8 +1,141 @@
 ﻿@model Post
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head><title></title></head>
-    <body>
-        @Model.Title
-    </body>
-</html>
+<div class="boxed  push-down-60">
+    <!-- Featured image and meta start -->
+    <div class="meta">
+        <img class="wp-post-image" src="~/lib/assets/images/dummy-licensed/@Model.Image" alt="Blog image" width="1138" height="493">
+        <div class="meta__container">
+            <div class="row">
+                <div class="col-xs-12  col-sm-8">
+                    <div class="meta__info">
+                        <span class="meta__author"><img src="~/images/avatar/@Model.User.Image" alt="Meta avatar" width="30" height="30"> <a href="#">@Model.User.Fullname</a> in <a href="#">News</a></span>
+                        <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; @Model.PublishedOn</span>
+                    </div>
+                </div>
+                <div class="col-xs-12  col-sm-4">
+                    <div class="meta__comments">
+                        <span class="glyphicon glyphicon-comment"></span> &nbsp; <a href="single-post.html#disqus_thread"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Featured image and meta end -->
+    <!-- Start of the blogpost -->
+    <div class="row">
+        <div class="col-xs-10  col-xs-offset-1  col-md-8  col-md-offset-2  push-down-60">
+            <!-- Start of the content -->
+            <div class="post-content">
+                <h1><a href="#">@Model.Title</a></h1>
+               
+                <p>@Model.Description</p>
+            </div>
+            <!-- End of the content -->
+            <div class="row">
+                
+                    <div class="col-xs-12  col-sm-6">
+                       
+                        <h6>Toplam @Model.Comments.Count() adet yorum</h6>
+                        <hr>
+                    <div id="comments">
+
+                        @foreach(var comment in Model.Comments)
+                        {
+                            
+                        <div class="post-author">
+                            <img src="~/images/avatar/@comment.User.Image" alt="Post author">
+                            <h5><a href="#">@comment.User.Fullname</a></h5>
+                            <small>@comment.PublishedOn.ToString()</small><br />
+                            <span class="post-author__text">@comment.CommentText</span>
+                        </div>
+                        <hr>
+                        }
+                     </div>
+                       
+                    </div>
+                    <div class="col-xs-12  col-sm-6">
+                        <!-- Start of post tags -->
+                        <div class="tags">
+                            <h6>Tags</h6>
+                            <hr>
+                        @foreach(var tag in Model.Tags)
+                        {
+                        
+                            <a href="#" class="tags__link">@tag.Title</a>
+                            
+                        }
+                            
+                        </div>
+                        <!-- End of post tags -->
+                    </div>
+
+            </div>
+           
+            <div class="row">
+                <hr />
+                <div class="col-xs-10  col-xs-offset-1">
+                    <div class="contact">
+                        <h2>Yorum Yaz</h2>
+                        <form action="/post/AddComment" method="post">
+                            <input type="hidden" name="PostId" id="PostId" value="@Model.PostId" />
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <input type="text" name="UserName" id="UserName" placeholder="Adınız *">
+                                </div>
+                                <div class="col-xs-12">
+                                    <textarea rows="6" type="text" id="CommentText" name="CommentText" placeholder="Mesajınız *"></textarea>
+                                    <button id="saveComment" class="btn  btn-primary">Gönder</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- End of the blogpost -->
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#saveComment").click(function (event) {
+            event.preventDefault();
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddComment")',
+                    dataType: 'json',
+                    data: {
+                        PostId: $('#PostId').val(),
+                        UserName: $('#UserName').val(),
+                        CommentText: $('#CommentText').val(),
+                    },
+                    success: function (comment) {
+                        var date = new Date(comment.date);
+                        $("#comments").append(`
+                           <div class="post-author">
+                              <img src="/images/avatar/${comment.image}" alt="Post author">
+                              <h5><a href="#">${comment.user}</a></h5>
+                              <small>${date.toLocaleDateString()}</small><br />
+                              <span class="post-author__text">${comment.text}</span>
+                            </div>
+                            <hr>
+                        `);
+
+                        $("#UserName").val('');
+                        $("#CommentText").val('');
+
+                        
+                    }
+                });
+
+            return false;
+        });
+    });
+</script>
+}

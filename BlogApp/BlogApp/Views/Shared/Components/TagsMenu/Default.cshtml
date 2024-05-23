@@ -4,7 +4,7 @@
     <hr>
     @foreach (var item in Model)
     {
-        <a href="#" class="tags__link">@item.Title</a>
+        <a href="/posts/tag/@item.Url" class="tags__link">@item.Title</a>
 
     }
 </div>

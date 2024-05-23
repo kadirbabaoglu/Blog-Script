@@ -1,13 +1,18 @@
 ﻿using BlogApp.Data.Concrete.EfCore;
+using BlogApp.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BlogApp.Controllers
 {
     public class PostController : Controller
     {
-        
+
         private readonly BlogContext _context;
 
         public PostController(BlogContext context)
@@ -20,10 +25,10 @@ namespace BlogApp.Controllers
             return View(_context.Posts.ToList());
         }
 
-        public async Task<ActionResult> Details(int Id)
+        public async Task<ActionResult> Details(string slug)
         {
-           
-            return View(await _context.Posts.FirstOrDefaultAsync(x => x.PostId == Id));
+            var detail = await _context.Posts.Include(x => x.Tags).Include(x => x.Comments).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Url == slug);
+            return View(detail);
         }
 
         public ActionResult Create()
@@ -31,58 +36,37 @@ namespace BlogApp.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public JsonResult AddComment(int PostId, string UserName, string CommentText)
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
         {
-            try
+            
+            
+            var data = new Comment
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                PostId = PostId,
+                CommentText = CommentText,
+                PublishedOn = DateTime.Now,
+                User = new User { UserName = UserName, Image = "avatar.jpg" }
+            };
+
+            _context.Comments.Add(data);
+            _context.SaveChanges();
+
+            var result = new
             {
-                return View();
-            }
+               user = UserName,
+               text = CommentText,
+               date = DateTime.Now,
+               image = data.User.Image,
+
+            };
+
+            return new JsonResult ( result );
+
+
         }
 
-        
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

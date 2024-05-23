@@ -1,4 +1,5 @@
 using BlogApp.Data.Concrete.EfCore;
+using BlogApp.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,16 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "post_details",
+    pattern: "posts/{slug}",
+    defaults: new{ controller = "Post", action = "Details" });
+
+app.MapControllerRoute(
+    name: "post_bt_tagname",
+    pattern: "posts/tag/{slug}",
+    defaults: new { controller = "Home", action = "List" });
 
 app.MapControllerRoute(
     name: "default",
