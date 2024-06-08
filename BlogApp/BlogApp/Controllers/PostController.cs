@@ -1,11 +1,14 @@
 ﻿using BlogApp.Data.Concrete.EfCore;
 using BlogApp.Entities;
 using BlogApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using NuGet.Protocol.Core.Types;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using static System.Net.Mime.MediaTypeNames;
@@ -41,6 +44,7 @@ namespace BlogApp.Controllers
             return View(detail);
         }
 
+        [Authorize]
         public ActionResult AddBlog()
         {
             
@@ -48,6 +52,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> AddBlog(AddBlogViewModel model , IFormFile Image)
         {
 
@@ -95,6 +100,23 @@ namespace BlogApp.Controllers
             return View();
         }
 
+        public async Task<IActionResult> List()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "");
+            var UserRole = User.FindFirstValue(ClaimTypes.Role);
+            List<Post> posts;
+
+            if (UserRole == "admin")
+            {
+                 posts = await _context.Posts.Include(i => i.User).ToListAsync();
+            }
+            else
+            {
+                 posts = await _context.Posts.Include(i => i.User).Where(p => p.UserId == userId).ToListAsync();
+            }
+
+            return View(posts);
+        }
 
         [HttpPost]
         public JsonResult AddComment(int PostId,  string CommentText)
@@ -128,6 +150,78 @@ namespace BlogApp.Controllers
 
 
         }
+
+        public IActionResult Edit(int Id)
+        {
+            if (Id == null)
+            {
+                return NotFound();
+            }
+
+            var data = _context.Posts.FirstOrDefault(i => i.PostId == Id);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return View(data); 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Post model , IFormFile? imageFile)
+        {
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.Posts.FindAsync(model.PostId);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            if (imageFile != null)
+            {
+                var allowedImageTypes = new[] { ".jpg", ".jpeg", ".png" };
+                var extension = Path.GetExtension(imageFile.FileName).ToLower();
+                if (!allowedImageTypes.Contains(extension))
+                {
+                    ModelState.AddModelError("", "Lütfen geçerli bir resim türü seçiniz!");
+                    return View(model);
+                }
+
+                var randomFileName = $"{Guid.NewGuid()}{extension}";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/postimage", randomFileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                post.Image = randomFileName;
+            }
+
+            post.Title = model.Title;
+            post.Url = SeoUrlHelper.ToSeoFriendlyUrl(model.Title);
+            post.Description = model.Description;
+            post.IsActive = model.IsActive;
+            post.PublishedOn = DateTime.Now;
+
+            _context.Update(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("List" , "Post");
+
+        }
+
+
+        public IActionResult Delete(int Id) {
+        return View();  
+        }
+
+
 
     }
 }

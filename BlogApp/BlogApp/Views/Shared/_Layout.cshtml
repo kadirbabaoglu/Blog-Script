@@ -11,7 +11,8 @@
     <!-- Custom styles for this template -->
 
     <link rel="stylesheet" href="~/lib/assets/stylesheets/09fac9c5.main.css" />
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" />
 
     <!-- Google Fonts -->
     <script type="text/javascript">
@@ -37,7 +38,7 @@
     <header class="header  push-down-45">
         <div class="container">
             <div class="logo  pull-left">
-                <a href="index.html">
+                <a href="/">
                     <img src="~/lib/assets/images/logo.png" alt="Logo" width="352" height="140">
                 </a>
             </div>
@@ -57,15 +58,8 @@
                 <div class="collapse  navbar-collapse" id="readable-navbar-collapse">
                     <ul class="navigation">
                         <li class="dropdown  active">
-                            <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-                            <ul class="navigation__dropdown">
-                                <li> <a href="index.html">Home (Sidebar)</a>  </li>
-                                <li> <a href="home-slider.html">Home (Slider)</a>  </li>
-                                <li> <a href="home-multi-columns.html">Home (Multi Columns)</a>  </li>
-                                <li> <a href="home-ads.html">Home (With Ads)</a>  </li>
-                                <li> <a href="home-no-sidebar.html">Home (No Sidebar)</a>  </li>
-                                <li> <a href="home-full-width.html">Home (Full Width)</a>  </li>
-                            </ul>
+                            <a href="/" class="dropdown-toggle" data-toggle="dropdown">Anasayfa</a>
+                           
                         </li>
                         <li class="dropdown">
                             <a href="single-post.html" class="dropdown-toggle" data-toggle="dropdown">Post formats</a>
@@ -94,10 +88,11 @@
                 </div><!-- /.navbar-collapse -->
             </nav>
             <div class="hidden-xs  hidden-sm">
+                
                 <a href="#" class="search__container  js--toggle-search-mode"> <span class="glyphicon  glyphicon-search"></span>  </a>
                 <div class="social">
-                
                     <a href="#" class="social__container"> <span class="glyphicon  glyphicon-user"></span>  </a>
+                    
                     <ul class="social__dropdown">
                         @if (User.Identity!.IsAuthenticated)
                         {
@@ -113,6 +108,10 @@
                         }
                     </ul>
                 </div>
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    <a href="/Post/List" class="social__container"> <span class="glyphicon  glyphicon-folder-open"></span>  </a>
+                }
             </div>
         </div>
     </header>
@@ -208,6 +207,7 @@
     </footer>
     @RenderSection("scripts", required: false)
     <script src="~/lib/assets/js/main.js"></script>
+    
 
    
 </body>

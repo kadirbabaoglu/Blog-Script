@@ -15,7 +15,10 @@ builder.Services.AddDbContext<BlogContext>(options =>
     options.UseMySql(connecitonString , version);
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt =>
+{
+    opt.LoginPath = "/User/Login";
+});
 
 var app = builder.Build();
 

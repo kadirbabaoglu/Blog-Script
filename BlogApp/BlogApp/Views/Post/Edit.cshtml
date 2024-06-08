@@ -1,6 +1,6 @@
-﻿@model AddBlogViewModel
+﻿@model Post
 @{
-    ViewData["Title"] = "AddBlog";
+    ViewData["Title"] = "Profil";
 }
 
 <div class="container">
@@ -11,18 +11,22 @@
                     <div class="col-xs-10  col-xs-offset-1  col-md-8  col-md-offset-2">
                        
 
-                        <form asp-controller="Post" asp-action="AddBlog" method="post" novalidate enctype="multipart/form-data">
+                        <form asp-controller="Post" asp-action="Edit" method="post" novalidate enctype="multipart/form-data">
 
-                            <div asp-validation-summary="ModelOnly"></div>
-                            <div class="mb-3">
+                            <div asp-validation-summary="All"></div>
+                            <input type="hidden" asp-for="PostId" />
+
+                            <div class="mt-3">
                                 <label asp-for="Title" class="form-label">Başlık</label>
                                 <input asp-for="Title" class="form-control" />
                                 <span asp-validation-for="Title"></span>
                             </div>
 
-                            <div class="mb-3">
+                            <img src="~/images/postimage/@Model.Image" width="150" height="150" />
+
+                            <div class="mt-3">
                                 <label for="formFile" class="form-label">Resim Seç</label>
-                                <input class="form-control" type="file" id="formFile" name="Image">
+                                <input class="form-control" type="file" id="formFile" name="ImageFile">
                             </div>
 
                             <div class="mb-3">
@@ -32,15 +36,21 @@
 
                             </div>
 
-                            <div class="mb-3">
+                            @if (User.FindFirstValue(ClaimTypes.Role) == "admin")
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"  asp-for="IsActive">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Durum True/False
+                                    </label>
+                                </div>
+                            }
+
+                            <div class="mt-3">
                             <button class="btn btn-primary btn-sm">Kaydet</button>
                             </div>
                             
-
-
                         </form>
-
-
 
 
                     </div>
