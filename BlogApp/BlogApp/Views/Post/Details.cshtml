@@ -3,7 +3,7 @@
 <div class="boxed  push-down-60">
     <!-- Featured image and meta start -->
     <div class="meta">
-        <img class="wp-post-image" src="~/lib/assets/images/dummy-licensed/@Model.Image" alt="Blog image" width="1138" height="493">
+        <img class="wp-post-image" src="~/images/postimage/@Model.Image" alt="Blog image" width="1138" height="493">
         <div class="meta__container">
             <div class="row">
                 <div class="col-xs-12  col-sm-8">
@@ -28,7 +28,7 @@
             <div class="post-content">
                 <h1><a href="#">@Model.Title</a></h1>
                
-                <p>@Model.Description</p>
+                <p>@Html.Raw(Model.Description)</p>
             </div>
             <!-- End of the content -->
             <div class="row">
@@ -73,23 +73,27 @@
            
             <div class="row">
                 <hr />
-                <div class="col-xs-10  col-xs-offset-1">
-                    <div class="contact">
-                        <h2>Yorum Yaz</h2>
-                        <form action="/post/AddComment" method="post">
-                            <input type="hidden" name="PostId" id="PostId" value="@Model.PostId" />
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <input type="text" name="UserName" id="UserName" placeholder="Adınız *">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="col-xs-10  col-xs-offset-1">
+                        <div class="contact">
+                            <h2>Yorum Yaz</h2>
+                            <form action="/post/AddComment" method="post">
+                                <input type="hidden" name="PostId" id="PostId" value="@Model.PostId" />
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <textarea rows="6" type="text" id="CommentText" name="CommentText" placeholder="Mesajınız *"></textarea>
+                                        <button id="saveComment" class="btn  btn-primary">Gönder</button>
+                                    </div>
                                 </div>
-                                <div class="col-xs-12">
-                                    <textarea rows="6" type="text" id="CommentText" name="CommentText" placeholder="Mesajınız *"></textarea>
-                                    <button id="saveComment" class="btn  btn-primary">Gönder</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <span>yorum yazmak için giriş yapın <a href="/User/Login">Tıklayın</a></span>
+                }
             </div>
 
 
