@@ -61,28 +61,6 @@
                             <a href="/" class="dropdown-toggle" data-toggle="dropdown">Anasayfa</a>
                            
                         </li>
-                        <li class="dropdown">
-                            <a href="single-post.html" class="dropdown-toggle" data-toggle="dropdown">Post formats</a>
-                            <ul class="navigation__dropdown">
-                                <li> <a href="single-post.html">Single Post</a>  </li>
-                                <li> <a href="single-post-without-image.html">Single Post (No Image)</a>  </li>
-                                <li> <a href="single-post-video.html">Single Post (Video)</a>  </li>
-                                <li> <a href="single-post-full-width.html">Single Post (Full Width Image)</a>  </li>
-                                <li> <a href="search-results.html">Search Results</a>  </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="elements.html" class="dropdown-toggle" data-toggle="dropdown">Elements</a>
-                        </li>
-                        <li class="">
-                            <a href="features.html" class="dropdown-toggle" data-toggle="dropdown">Features</a>
-                        </li>
-                        <li class="">
-                            <a href="about-us.html" class="dropdown-toggle" data-toggle="dropdown">About</a>
-                        </li>
-                        <li class="">
-                            <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown">Contact</a>
-                        </li>
                         
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -97,7 +75,7 @@
                         @if (User.Identity!.IsAuthenticated)
                         {
                            
-                        <li><a href="#" class="social__container">@User.Identity.Name</a></li>
+                            <li><a href="/User/profil/@User.Identity.Name" class="social__container">@User.Identity.Name</a></li>
                         <li><a href="/Post/AddBlog" class="social__container">Blog Yaz</a></li>
                         <li><a href="/User/LogOut" class="social__container">Çıkış Yap</a></li>
                         }
@@ -137,12 +115,12 @@
 
 
     <footer class="footer">
-        <div class="container">
+        @* <div class="container">
             <div class="col-xs-12  col-md-3">
                 <div class="widget-about  push-down-30">
-                    <img src="~/lib/assets/images/logo.png" alt="Logo" width="176" height="70">
+                    <img src="~/lib/assets/images/logo.png" alt="logo" width="176" height="70">
                     <br />
-                    <span class="footer__text">We focus on highly customizable, fast and optimized themes for variety of popular platform like WordPress and Magento.</span>
+                    <span class="footer__text">we focus on highly customizable, fast and optimized themes for variety of popular platform like wordpress and magento.</span>
                     <br />
                     <br />
                     <div class="social-icons  widget-social-icons">
@@ -154,47 +132,47 @@
             </div>
             <div class="col-xs-12  col-md-3">
                 <div class="tags  widget-tags">
-                    <h6>Tags</h6>
+                    <h6>tags</h6>
                     <hr>
-                    <a href="#" class="tags__link">Tech</a>
-                    <a href="#" class="tags__link">Web</a>
-                    <a href="#" class="tags__link">UI/UX</a>
-                    <a href="#" class="tags__link">Tutorials</a>
-                    <a href="#" class="tags__link">Workflow</a>
+                    <a href="#" class="tags__link">tech</a>
+                    <a href="#" class="tags__link">web</a>
+                    <a href="#" class="tags__link">uı/ux</a>
+                    <a href="#" class="tags__link">tutorials</a>
+                    <a href="#" class="tags__link">workflow</a>
                 </div>
             </div>
             <div class="col-xs-12  col-md-3">
                 <nav class="widget-navigation  push-down-30">
-                    <h6>Navigation</h6>
+                    <h6>navigation</h6>
                     <hr>
                     <ul class="navigation">
-                        <li> <a href="index.html">Home</a>  </li>
-                        <li> <a href="single-post.html">Post Formats</a>  </li>
-                        <li> <a href="elements.html">Elements</a>  </li>
-                        <li> <a href="about-us.html">About</a>  </li>
-                        <li> <a href="contact.html">Contact</a>  </li>
+                        <li> <a href="index.html">home</a>  </li>
+                        <li> <a href="single-post.html">post formats</a>  </li>
+                        <li> <a href="elements.html">elements</a>  </li>
+                        <li> <a href="about-us.html">about</a>  </li>
+                        <li> <a href="contact.html">contact</a>  </li>
                     </ul>
                 </nav>
             </div>
             <div class="col-xs-12  col-md-3">
                 <div class="widget-contact  push-down-30">
-                    <h6>Contact Us</h6>
+                    <h6>contact us</h6>
                     <hr>
                     <span class="widget-contact__text">
-                        <span class="widget-contact__title">Readable Itd.</span>
-                        <br>Tehnološki park 19,
-                        <br>1000 Ljubljana
-                        <br>Slovenia
+                        <span class="widget-contact__title">readable ıtd.</span>
+                        <br>tehnološki park 19,
+                        <br>1000 ljubljana
+                        <br>slovenia
                     </span>
                 </div>
             </div>
-        </div>
+        </div> *@
     </footer>
     <footer class="copyrights">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12  col-sm-6">
-                    <a href="http://themeforest.net/item/readable-blog-template-focused-on-readability/7499064?ref=ProteusThemes">Readable</a> HTML Template © Copyright 2014.
+                    <a href="">Kadir Babaoglu
                 </div>
                 <div class="col-xs-12  col-sm-6">
                     <div class="copyrights--right">

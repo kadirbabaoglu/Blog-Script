@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-xs-12  col-sm-8">
                     <div class="meta__info">
-                        <span class="meta__author"><img src="~/images/avatar/@Model.User.Image" alt="Meta avatar" width="30" height="30"> <a href="#">@Model.User.Fullname</a> in <a href="#">News</a></span>
+                        <span class="meta__author"><img src="~/images/avatar/@Model.User.Image" alt="Meta avatar" width="30" height="30"> <a href="/profil/@Model.User.UserName">@Model.User.Fullname</a> in <a href="#">News</a></span>
                         <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; @Model.PublishedOn</span>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                             
                         <div class="post-author">
                             <img src="~/images/avatar/@comment.User.Image" alt="Post author">
-                            <h5><a href="#">@comment.User.Fullname</a></h5>
+                            <h5><a href="/profil/@Model.User.UserName">@comment.User.Fullname</a></h5>
                             <small>@comment.PublishedOn.ToString()</small><br />
                             <span class="post-author__text">@comment.CommentText</span>
                         </div>

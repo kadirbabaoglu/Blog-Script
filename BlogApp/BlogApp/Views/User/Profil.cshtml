@@ -1,0 +1,49 @@
+﻿@model User
+<div class="col-xs-4  col-md-4">
+    <div class="boxed  push-down-45">
+        <div class="widget-author  boxed  push-down-30">
+            <div class="widget-author__image-container">
+                <div class="widget-author__avatar--blurred">
+                    <img src="~/images/avatar/@Model.Image" alt="Avatar image" width="90" height="90">
+                </div>
+                <img class="widget-author__avatar" src="~/images/avatar/@Model.Image" alt="Avatar image" width="90" height="90">
+            </div>
+            <div class="row">
+                <div class="col-xs-10  col-xs-offset-1">
+                    <h4>@Model.Fullname</h4>
+                    <p>Description Todo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-8  col-md-8">
+    <div class="boxed  push-down-45">
+
+        <div id="Post">
+            <h5>Yayınlanan Postlar</h5>
+            <hr />
+            <ul class="list-group">
+                @foreach(var post in Model.Posts)
+                {
+                    <li class="list-group-item"><i class="bi bi-caret-right-fill"></i><a href="/posts/@post.Url">@post.Title</a></li>
+                }
+            </ul>
+        </div>
+        <hr />
+        <div id="Comment">
+            <h5>Yayınlanan Yorumlar</h5>
+            <hr />
+            <ul class="list-group">
+                @foreach (var comment in Model.Comments)
+                {
+                    <li class="list-group-item"><i class="bi bi-chat-right-fill"></i>@comment.CommentText <i><u>[@comment.Post.Title]</u></i></li>
+                }
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+

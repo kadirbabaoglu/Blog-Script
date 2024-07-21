@@ -28,7 +28,6 @@ namespace BlogApp.Controllers
             return View();
         }
 
-        
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -114,6 +113,27 @@ namespace BlogApp.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login");
+        }
+
+        public IActionResult Profil(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return NotFound();
+            }
+
+            var user = _context.Users
+                .Include(x => x.Posts)
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.Post)
+                .FirstOrDefault(x => x.UserName == username);
+            if (user == null) 
+            {
+                return NotFound();
+            }
+
+
+            return View(user);
         }
     }
 }
